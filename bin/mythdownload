@@ -1,0 +1,139 @@
+#!/usr/bin/python
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""
+This script is designed to be run as a user job in MythTV.
+
+The script uses HandBrake to convert a recording to mp4 and then
+tries to contact an Android phone (via AutoRemote and Tasker) and 
+transfer the recording to the phone.
+
+See README for more info
+"""
+
+
+import urllib, urllib2
+import time
+import sys
+import os
+from datetime import datetime
+from subprocess import call
+import re
+
+# CONFIGURATION
+
+# Your AutoRemote key
+AUTO_REMOTE_KEY = "YOUR_KEY_HERE"
+
+# Path to web folder
+WEB_ROOT_FOLDER = "/var/www"
+WEB_FOLDER = "download"
+
+# Web symlink
+# Symlink from converted folder to web path
+WEB_SYMLINK = "files"
+
+# Local IP address of web server
+# i.e. downloads will only occur when on home network
+LOCAL_IP = "http://192.168.0.1"
+
+# Path to where videos will be stored
+# MUST BE WRITABLE BY MYTHTV
+CONVERTED_FOLDER = "/my/temp/folder"
+
+# END OF CONFIGURATION
+#######################################################
+
+
+myAutoRemote = "http://autoremotejoaomgcd.appspot.com/sendmessage?ttl=60&key=%s&" % (AUTO_REMOTE_KEY)
+
+downloading = False
+checkfile = os.path.join (WEB_ROOT_FOLDER, WEB_FOLDER, "mythdownload.txt")
+r = 5
+
+# Parse variables
+# Get path of file to be converted
+filepath=sys.argv[1]
+
+# Get Title
+title=re.sub('[^A-Za-z0-9]+','',sys.argv[2])
+
+# Get recording date
+try:
+  progtime = sys.argv[3]
+except:
+  progtime=datetime.now().strftime("%Y%m%d%H%M")
+
+host="%s/%s/%s" % (LOCAL_IP, WEB_FOLDER, WEB_SYMLINK)
+outputdir = "%s/downloads" % (CONVERTED_FOLDER)
+
+def getPage(url):
+  user_agent = 'Mozilla/5 (Solaris 10) Gecko'
+  headers = { 'User-Agent' : user_agent }
+  request = urllib2.Request(url)
+  response = urllib2.urlopen(request)
+  the_page = response.read()
+  return the_page
+  
+def sendUpdate(message):
+  myAR = myAutoRemote + urllib.urlencode({'message': message})
+  getPage(myAR)
+
+def startDownload(downloadfile, filepath):  
+  #Tell phone what to download
+  sendUpdate("mythdownload %s=:=%s" % (host, downloadfile))
+  #Give phone time to connect to wifi
+  time.sleep(15)
+
+  #Check if phone has responded
+  for a in range(r):
+    print "Checking for connection. Attempt (%d of %d)." % (a+1,r)
+    if os.path.exists(checkfile):
+      downloading = True
+      break
+    time.sleep(2)
+
+  if downloading:
+    print "Downloading..."
+    #keep script running so user job doesn't end
+    while downloading:
+      #phone has exited so we can end script
+      if not os.path.exists(checkfile):
+        downloading = False
+      time.sleep(15)
+    #tidy up and delete the file
+    os.remove(filepath)
+
+  else:
+    print "No response from phone. Quitting..."
+      
+def startConversion(input, output):
+  # This function converts the program to mp4 irrespective of the
+  # target phone's availability.
+  # If the phone is unavailable then the file is retained and the conversion
+  # script is skipped when the user job is re-run
+  downloadfile= output + ".mp4"
+  outputfile=os.path.join(outputdir,downloadfile)
+  if not os.path.isfile(outputfile):
+    call(["HandBrakeCLI","-i", input, "-o", outputfile])
+  return outputfile
+
+
+outputtitle = title + "(" + progtime + ")"
+convertedfile = startConversion(filepath,outputtitle)
+
+startDownload(outputtitle, convertedfile)    
+
+    

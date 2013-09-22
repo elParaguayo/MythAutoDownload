@@ -1,0 +1,30 @@
+MythDownload
+
+Installation instructions:
+
+1) Pick a folder where converted files will be saved
+  - Create a subfolder called "downloads"
+  - Folder must be writable by MythTV
+  
+2) Web
+  - create a new folder in your web root (usually /var/www)
+  - web-user needs write access to the folder
+  - Copy web/file.php to that folder
+  - Create a symlink to the "downloads" folder created above
+  - In a browser, browse to the symlink e.g. "http://localhost/mythdownload/downloads" to check permissions 
+  
+3) mythdownload
+  - Copy bin/mythdownload to /usr/local/bin
+  - give execute permissions "sudo chmod +x /usr/local/bin/mythdownload"
+  - open file in your favourite editor and edit config section 
+  
+4) MythTV
+  - Create a new user job:
+    - mythdownload "%DIR%/%FILE%" "%TITLE%" "%STARTTIME%"
+    
+5) Phone
+  - (I assume Tasker and AutoRemote are already installed)
+  - Copy Tasker/MythDownload.prf.xml to your phone
+  - Import xml into Tasker
+  
+That should be it!

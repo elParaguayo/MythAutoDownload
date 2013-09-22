@@ -1,0 +1,140 @@
+<TaskerData sr="" dvi="1" tv="4.0m">
+<Profile sr="prof40" ve="2">
+<cdate>1365502488415</cdate>
+<edate>1379783918941</edate>
+<id>40</id>
+<mid0>39</mid0>
+<nme>MythDownload</nme>
+<State sr="con0">
+<code>5783</code>
+<Bundle sr="arg0">
+<Vals sr="val">
+<com.twofortyfouram.locale.intent.extra.BLURB>mythdownload</com.twofortyfouram.locale.intent.extra.BLURB>
+<com.twofortyfouram.locale.intent.extra.BLURB-type>java.lang.String</com.twofortyfouram.locale.intent.extra.BLURB-type>
+<commparamsvar>arpar</commparamsvar>
+<commparamsvar-type>java.lang.String</commparamsvar-type>
+<commvar>arcomm</commvar>
+<commvar-type>java.lang.String</commvar-type>
+<instant>true</instant>
+<instant-type>java.lang.Boolean</instant-type>
+<message>mythdownload</message>
+<message-type>java.lang.String</message-type>
+<messagecaseinsensitive>false</messagecaseinsensitive>
+<messagecaseinsensitive-type>java.lang.Boolean</messagecaseinsensitive-type>
+<messageexact>false</messageexact>
+<messageexact-type>java.lang.Boolean</messageexact-type>
+<messageregex>false</messageregex>
+<messageregex-type>java.lang.Boolean</messageregex-type>
+<messagevar>armessage</messagevar>
+<messagevar-type>java.lang.String</messagevar-type>
+<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>messagevar commvar commparamsvar message target plugininstanceid plugintypeid </net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>
+<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>java.lang.String</net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>
+<net.dinglisch.android.tasker.subbundled>true</net.dinglisch.android.tasker.subbundled>
+<net.dinglisch.android.tasker.subbundled-type>java.lang.Boolean</net.dinglisch.android.tasker.subbundled-type>
+<plugininstanceid>0669ad03-5d8c-4d23-bab2-1e10d239ff7f</plugininstanceid>
+<plugininstanceid-type>java.lang.String</plugininstanceid-type>
+<plugintypeid>com.joaomgcd.autoremote.IntentRemote</plugintypeid>
+<plugintypeid-type>java.lang.String</plugintypeid-type>
+<target>&lt;null&gt;</target>
+<target-type>java.lang.String</target-type>
+</Vals>
+</Bundle>
+<Str sr="arg1" ve="3">com.joaomgcd.autoremote</Str>
+<Str sr="arg2" ve="3">AutoRemote</Str>
+</State>
+</Profile>
+<Task sr="task39">
+<cdate>1365501980037</cdate>
+<edate>1379783918941</edate>
+<id>39</id>
+<nme>download</nme>
+<pri>10</pri>
+<Action sr="act0" ve="3">
+<code>425</code>
+<Int sr="arg0" val="1"/>
+</Action>
+<Action sr="act1" ve="3">
+<code>523</code>
+<Str sr="arg0" ve="3">Download started</Str>
+<Str sr="arg1" ve="3">%arcomm</Str>
+<Img sr="arg2" ve="2">
+<nme>lhs_menu</nme>
+<pkg>net.dinglisch.android.ipack.ilikebuttonshd</pkg>
+</Img>
+<Int sr="arg3" val="0"/>
+<Int sr="arg4" val="0"/>
+<Int sr="arg5" val="3"/>
+</Action>
+<Action sr="act2" ve="3">
+<code>548</code>
+<Str sr="arg0" ve="3">Downloading %arcomm from %arpar2</Str>
+<Int sr="arg1" val="0"/>
+</Action>
+<Action sr="act3" ve="3">
+<code>118</code>
+<Str sr="arg0" ve="3">192.168.0.70</Str>
+<Str sr="arg1" ve="3">download/file.php?mode=download</Str>
+<Str sr="arg2" ve="3"/>
+<Str sr="arg3" ve="3"/>
+<Int sr="arg4" val="10"/>
+<Str sr="arg5" ve="3"/>
+<Str sr="arg6" ve="3"/>
+</Action>
+<Action sr="act4" ve="3">
+<code>118</code>
+<se>false</se>
+<Str sr="arg0" ve="3">%arpar2</Str>
+<Str sr="arg1" ve="3">%arcomm</Str>
+<Str sr="arg2" ve="3"/>
+<Str sr="arg3" ve="3"/>
+<Int sr="arg4" val="10"/>
+<Str sr="arg5" ve="3">application/octet-stream</Str>
+<Str sr="arg6" ve="3">MythDownloads/%arcomm.MP4</Str>
+</Action>
+<Action sr="act5" ve="3">
+<code>118</code>
+<Str sr="arg0" ve="3">192.168.0.70</Str>
+<Str sr="arg1" ve="3">download/file.php?mode=delete</Str>
+<Str sr="arg2" ve="3"/>
+<Str sr="arg3" ve="3"/>
+<Int sr="arg4" val="10"/>
+<Str sr="arg5" ve="3"/>
+<Str sr="arg6" ve="3"/>
+</Action>
+<Action sr="act6" ve="3">
+<code>779</code>
+<label>%arcomm</label>
+<Str sr="arg0" ve="3">Download started</Str>
+<Int sr="arg1" val="0"/>
+</Action>
+<Action sr="act7" ve="3">
+<code>523</code>
+<Str sr="arg0" ve="3">Download finished</Str>
+<Str sr="arg1" ve="3">%arcomm</Str>
+<Img sr="arg2" ve="2">
+<nme>lhs_screensaver</nme>
+<pkg>net.dinglisch.android.ipack.ilikebuttonshd</pkg>
+</Img>
+<Int sr="arg3" val="0"/>
+<Int sr="arg4" val="0"/>
+<Int sr="arg5" val="3"/>
+<ListElementItem sr="item0">
+<label>QuickPic</label>
+<Action sr="action" ve="3">
+<code>20</code>
+<App sr="arg0">
+<appClass>com.alensw.PicFolder.GalleryActivity</appClass>
+<appPkg>com.alensw.PicFolder</appPkg>
+<label>QuickPic</label>
+</App>
+<Str sr="arg1" ve="3"/>
+<Int sr="arg2" val="1"/>
+</Action>
+<Img sr="icon" ve="2">
+<cls>com.alensw.PicFolder.GalleryActivity</cls>
+<pkg>com.alensw.PicFolder</pkg>
+</Img>
+</ListElementItem>
+</Action>
+</Task>
+</TaskerData>
